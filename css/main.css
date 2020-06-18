@@ -3,6 +3,7 @@
     --Secondary-color: rgb(255, 210, 86);
     --text-primary: rgb(14, 12, 20);
     --overlay-color: rgba(14, 12, 20, 0.7);
+    --transparent-color: rgba(94, 93, 97, 0.7);
 }
 
 * {
@@ -29,8 +30,8 @@ li {
     margin: auto 1.2rem; 
 }
 
-span .logo{
-    color: var(--text-primary);
+span.logo{
+    color: var(--Secondary-color);
     margin-left: 1rem;
 }
 
@@ -38,41 +39,253 @@ span .logo{
     background: var(--Secondary-color);
     color: var(--text-primary);
     padding: 0.7rem 1rem;
-    margin: 2rem;
+    margin: 2rem 0;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+}
+
+.btn:hover, header .fa:hover{
+    opacity: 0.8;
+}
+
+div.logo{
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 2;
 }
 
 header{
-    background: url(../assets/image-header.jpg) no-repeat center center/cover;
+    background: var(--overlay-color);
     color: var(--Primary-color);
     width: 100%;
     height: 100vh;
     position: relative;
-    z-index: -2;
 }
 
-header::before{
+header:before{
+    background: url(../assets/image-header.jpg) no-repeat center center/cover;
     content: '';
-    background: var(--overlay-color);
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     z-index: -1;
+    opacity: 0.9;
 }
 
-header #head{
+header .nav-links{
     width: 100%;
-    height: 90%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+    pointer-events: none;
 }
 
-header #head > div{
+header .nav-links > div{
+    background: rgba(26, 25, 25, 0.9);
+    min-width: 200vw;
+    min-height: 200vw;
+    border-radius: 50%;
+    display: flex;
+    flex: none;
+    justify-content: center;
+    align-items: center;
+    transform: scale(0);
+    transition: all 0.4s ease;
+}
+
+header .nav-links > div ul{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 70vh;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    opacity: 0;
+    transition: all 0.4s ease 0.1s;
+}
+
+header .nav-links > div ul li{
+    border-bottom: 0.1px dotted var(--Secondary-color);
+    width: 100%;
+    margin: 0;
+}
+
+header .nav-links > div ul li:last-child{
+    border-bottom: none;
+}
+
+header .nav-links > div ul li a{
+    padding: 2rem 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: visible;
+}
+
+header .nav-links > div ul li:hover{
+    background: rgba(51, 50, 50, 0.8);
+}
+
+header .menu-wrap{
+    background: var(--transparent-color);
+    width: 50px;
+    height: 50px;
+    position: fixed;
+    top: 5px;
+    right: 0;
+    padding: 0.5rem;
+    cursor: pointer;
+    z-index: 1;
+}
+
+header .menu-wrap .toggler{
+    position: absolute;
+    top: 0;
+    left: 5px;
+    width: 50px;
+    height: 50px;
+    opacity: 0;
+    z-index: 3;
+}
+
+header .menu-wrap .toggler:checked + .lines > div{
+    transform: rotate(135deg);
+}
+
+header .menu-wrap .toggler:checked:hover + .lines > div{
+    transform: rotate(225deg);
+}
+
+header .menu-wrap .toggler:checked:hover + .lines .last-line{
+    transform: scale(0);
+}
+
+header .menu-wrap .toggler:checked + .lines .first-line::before,
+header .menu-wrap .toggler:checked + .lines .first-line::after{
+    top: 0;
+    transform: rotate(90deg);
+}
+
+header .menu-wrap .toggler:checked + .lines .last-line{
+    transform: scale(0);
+}
+
+header .menu-wrap .toggler:checked ~ .nav-links{
+    visibility: visible;
+}
+
+header .menu-wrap .toggler:checked ~ .nav-links > div{
+    transform: scale(1);
+}
+
+header .menu-wrap .toggler:checked ~ .nav-links > div ul{
+    opacity: 1;
+}
+
+header .menu-wrap > div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+header .menu-wrap .first-line{
+    width: 100%;
+    height: 10%;
+    background: var(--Primary-color);
+    position: relative;
+    transition: all 0.5s ease;
+    z-index: 1;
+}
+
+header .menu-wrap .last-line{
+    position: absolute;
+    top: 42px;
+    left: 8px;
+    width: 40%;
+    height: 8%;
+    background: var(--Primary-color);
+    transition: all 0.5s ease;
+}
+
+header .menu-wrap .first-line::before,
+header .menu-wrap .first-line::after{
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--Primary-color);
+    transition: all 0.5s ease;
+    z-index: 1;
+}
+
+header .menu-wrap .first-line::after{
+    top: 10px;
+}
+
+#head{
+    width: 100%;
+    height: 100%;
+}
+
+#head > div{
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
+    padding: 4rem;
+    margin: auto;
 }
 
+#head > div h1{
+    letter-spacing: 0.3rem;
+    font-size: 2rem;
+}
+
+#head > div > div{
+    width: 100%;
+    margin-left: 2rem;
+    margin-top: 3rem;
+    position: relative;
+}
+
+#head > div > div .fa{
+    position: absolute;
+    top: 15%;
+    left: -60px;
+    color: var(--Secondary-color);
+    cursor: pointer;
+}
+
+#head > div > div .fa-chevron-right{
+    left: 95%;
+}
+
+#head > div p{
+    width: 130px;
+    font-size: 1.2rem;
+    line-height: 1.7rem;
+}
+
+#section1 .section1{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+}
+
+#section1 .box{
+    width: 500px;
+}
 
